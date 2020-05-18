@@ -23,16 +23,21 @@ import com.huttger.joshua.models.Product;
 @SpringBootTest
 @AutoConfigureMockMvc
 class OnlineStoreApplicationTests {
+	
 	@Autowired
 	MockMvc mockMvc;
+	
 	@Autowired
 	ObjectMapper jsonMapper;
+	
 	@Test
 	void contextLoads() {
 	}
+	
 	private Product jsonStringToProduct(String jsonString) throws JsonMappingException, JsonProcessingException {
 		return jsonMapper.readValue(jsonString, Product.class);
 	}
+	
 	private Product postProduct(String name, String desc,long price) throws JsonProcessingException, Exception {
 		Product newProduct = new Product(name,desc,price);
 		MvcResult requestResult = mockMvc.perform(post("/products")
@@ -42,6 +47,7 @@ class OnlineStoreApplicationTests {
 				.andReturn();
 		return jsonStringToProduct(requestResult.getResponse().getContentAsString());
 	}
+	
 	private Product getProductById(long id) throws JsonMappingException, JsonProcessingException, UnsupportedEncodingException, Exception {
 		return jsonMapper.readValue(mockMvc.perform(get("/products/"+id))
 				.andReturn()
@@ -50,6 +56,7 @@ class OnlineStoreApplicationTests {
 				Product.class);
 
 	}
+	
 	@Test
 	void testAddProduct() throws JsonProcessingException, Exception {
 		Product justCreatedProduct = postProduct("chicken","fried chicken with sauce",1000l);
