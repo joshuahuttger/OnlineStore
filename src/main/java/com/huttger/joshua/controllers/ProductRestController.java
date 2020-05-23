@@ -1,6 +1,8 @@
 package com.huttger.joshua.controllers;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,10 @@ public class ProductRestController {
 	@GetMapping(path="/{id}")
 	public Product getProductById(@PathVariable int id) {
 		return productRepo.findById(id);
+	}
+	@GetMapping
+	public List<Product> getAllProducts(){
+		return productRepo.findAll();
 	}
 	@PostMapping
 	public Product addProduct(@RequestBody Product newProduct) {
